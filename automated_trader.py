@@ -12,7 +12,7 @@ from datetime import datetime
 sys.path.insert(0, str(Path(__file__).parent / "src"))
 
 from data.price_feed import BTCPriceFeed
-from quant_strategy import QuantStrategy
+from institutional_strategy import InstitutionalStrategy
 from trading.risk_manager import RiskManager
 
 
@@ -33,7 +33,7 @@ class AutomatedTrader:
         
         # Initialize components
         self.price_feed = BTCPriceFeed()
-        self.quant_strategy = QuantStrategy()
+        self.institutional_strategy = InstitutionalStrategy()
         self.risk_manager = RiskManager(initial_capital=self.initial_capital)
         
         # Override with stricter live settings
@@ -118,17 +118,18 @@ class AutomatedTrader:
         
         prices_15m = self.price_feed.estimate_15min_prices(hourly_prices)
         
-        # Use aggressive quant strategy
-        analysis = self.quant_strategy.analyze(prices_15m)
+        # Use institutional-grade strategy with multi-gate confirmation
+        analysis = self.institutional_strategy.analyze(prices_15m)
         
         signal = analysis["signal"]
         confidence = analysis["confidence"]
+        position_pct = analysis.get("position_pct", 0)
         
-        print(f"   {signal} | {confidence}% | RSI: {analysis['rsi']:.1f} | Score: {analysis['total_score']:+.2f}")
+        gates = analysis.get("gates", {})
+        print(f"   {signal} | {confidence}% | Pos: {position_pct:.1f}% | Gates: {gates.get('passed', 0)}/{gates.get('required', 3)}")
         
-        # Aggressive threshold: 55% (not 70%)
-        min_conf = 55
-        if confidence < min_conf:
+        # Institutional threshold: 70% minimum
+        if confidence < 70:
             return None
         
         should_trade, risk_reason = self.risk_manager.should_trade(
