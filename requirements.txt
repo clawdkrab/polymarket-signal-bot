@@ -1,0 +1,5 @@
+py-clob-client
+requests
+pandas
+numpy
+python-dotenv

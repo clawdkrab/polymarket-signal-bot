@@ -1,0 +1,27 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+
+# Credentials (NEVER COMMIT)
+*credentials*.json
+.env
+*.key
+
+# Data & Logs
+src/memory/*.jsonl
+src/memory/*.json
+*.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# OS
+.DS_Store
