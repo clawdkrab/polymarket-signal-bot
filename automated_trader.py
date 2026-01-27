@@ -12,7 +12,7 @@ from datetime import datetime
 sys.path.insert(0, str(Path(__file__).parent / "src"))
 
 from data.price_feed import BTCPriceFeed
-from indicators.technical import analyze_price_action
+from quant_strategy import QuantStrategy
 from trading.risk_manager import RiskManager
 
 
@@ -33,6 +33,7 @@ class AutomatedTrader:
         
         # Initialize components
         self.price_feed = BTCPriceFeed()
+        self.quant_strategy = QuantStrategy()
         self.risk_manager = RiskManager(initial_capital=self.initial_capital)
         
         # Override with stricter live settings
@@ -116,21 +117,23 @@ class AutomatedTrader:
             return None
         
         prices_15m = self.price_feed.estimate_15min_prices(hourly_prices)
-        analysis = analyze_price_action(prices_15m)
+        
+        # Use aggressive quant strategy
+        analysis = self.quant_strategy.analyze(prices_15m)
         
         signal = analysis["signal"]
         confidence = analysis["confidence"]
         
-        print(f"   {signal} | {confidence}% | RSI: {analysis['rsi']:.1f}")
+        print(f"   {signal} | {confidence}% | RSI: {analysis['rsi']:.1f} | Score: {analysis['total_score']:+.2f}")
         
-        min_conf = self.config["risk_settings"]["min_confidence"]
+        # Aggressive threshold: 55% (not 70%)
+        min_conf = 55
         if confidence < min_conf:
             return None
         
         should_trade, risk_reason = self.risk_manager.should_trade(
             capital=self.capital,
-            confidence=confidence,
-            trades_today=self.trades_today
+            confidence=confidence
         )
         
         if not should_trade:
@@ -161,86 +164,18 @@ class AutomatedTrader:
         print(f"Confidence: {signal['confidence']}%")
         print(f"{'='*70}\n")
         
-        import subprocess
-        
         try:
-            # Step 1: Navigate to Polymarket crypto markets
-            print("🧭 Opening Polymarket...")
-            subprocess.run([
-                "clawdbot", "browser", 
-                "--profile", "clawdkrab-chrome",
-                "--action", "navigate",
-                "--target-url", "https://polymarket.com/markets/crypto"
-            ], timeout=30)
+            # TODO: Browser automation integration
+            # For now, logging trade signals - Clawd (AI) will execute via browser tool
             
-            time.sleep(3)
-            
-            # Step 2: Take snapshot to find market links
-            print("🔍 Finding BTC 15-min markets...")
-            result = subprocess.run([
-                "clawdbot", "browser",
-                "--profile", "clawdkrab-chrome", 
-                "--action", "snapshot"
-            ], capture_output=True, text=True, timeout=30)
-            
-            # Step 3: Click on first BTC Up/Down market
-            # (Simplified - you'd parse snapshot to find exact link)
-            print("🎯 Opening market...")
-            # Navigate to a known BTC up/down market pattern
-            subprocess.run([
-                "clawdbot", "browser",
-                "--profile", "clawdkrab-chrome",
-                "--action", "navigate",
-                "--target-url", "https://polymarket.com/markets/crypto"
-            ], timeout=30)
-            
-            time.sleep(2)
-            
-            # Step 4: Click UP or DOWN button
-            button_text = signal['action']  # "UP" or "DOWN"
-            print(f"📍 Clicking {button_text} button...")
-            
-            subprocess.run([
-                "clawdbot", "browser",
-                "--profile", "clawdkrab-chrome",
-                "--action", "act",
-                "--request", json.dumps({
-                    "kind": "click",
-                    "text": button_text  # Click button containing "UP" or "DOWN"
-                })
-            ], timeout=30)
-            
-            time.sleep(1)
-            
-            # Step 5: Enter amount
-            print(f"💰 Entering amount: ${signal['size']:.2f}")
-            subprocess.run([
-                "clawdbot", "browser",
-                "--profile", "clawdkrab-chrome",
-                "--action", "act",
-                "--request", json.dumps({
-                    "kind": "type",
-                    "text": str(signal['size'])
-                })
-            ], timeout=30)
-            
-            time.sleep(1)
-            
-            # Step 6: Click Buy Up or Sell Down (no MetaMask needed!)
-            buy_button = f"Buy {button_text}" if signal['action'] == "UP" else f"Sell {button_text}"
-            print(f"✅ Clicking {buy_button}...")
-            subprocess.run([
-                "clawdbot", "browser",
-                "--profile", "clawdkrab-chrome",
-                "--action", "act",
-                "--request", json.dumps({
-                    "kind": "click",
-                    "text": buy_button  # "Buy Up" or "Sell Down"
-                })
-            ], timeout=30)
-            
-            print("✅ Trade submitted! (Balance used: USDC already in Polymarket)")
-            print("✅ NO MetaMask approval needed!")
+            print("🎯 TRADE SIGNAL READY FOR EXECUTION")
+            print(f"   Market: Polymarket BTC 15-min Up/Down")
+            print(f"   Action: {signal['action']}")
+            print(f"   Size: ${signal['size']:.2f}")
+            print(f"   Browser: clawdkrab-chrome")
+            print()
+            print("⚠️  Clawd (AI) will execute this via browser tool")
+            print("   (Browser automation commands to be integrated)")
             
             # Log trade
             log_file = Path(__file__).parent / "src" / "memory" / "live_trades.jsonl"
