@@ -104,10 +104,13 @@ class LiveTradingAgent:
             has_crypto = any(kw in question for kw in self.config["trading_rules"]["preferred_markets"] + 
                            self.config["trading_rules"]["backup_markets"])
             
+            # Must contain 15-minute timeframe
+            has_15min = any(kw in question for kw in self.config["trading_rules"]["required_keywords"])
+            
             # Must NOT be long-term
             is_longterm = any(kw in question for kw in self.config["trading_rules"]["avoid_keywords"])
             
-            if has_crypto and not is_longterm:
+            if has_crypto and has_15min and not is_longterm:
                 # Check if it has reasonable volume
                 volume = float(market.get("volume", 0))
                 if volume > 1000:  # At least $1k volume
