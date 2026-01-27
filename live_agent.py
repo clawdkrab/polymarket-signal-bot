@@ -68,6 +68,10 @@ class LiveTradingAgent:
         # State
         self.trades_today = 0
         self.daily_pnl = 0.0
+        self.total_pnl = 0.0
+        
+        # Compounding enabled by default
+        self.compound_profits = True
         
         print("="*70)
         print("⚠️  LIVE TRADING MODE - REAL CAPITAL")
@@ -76,11 +80,13 @@ class LiveTradingAgent:
         print(f"Max Position: {self.config['risk_settings']['max_position_pct']*100:.0f}%")
         print(f"Min Confidence: {self.config['risk_settings']['min_confidence']}%")
         print(f"Max Daily Loss: {self.config['risk_settings']['max_daily_loss_pct']*100:.0f}%")
+        print(f"Compounding: {'ENABLED ✅' if self.compound_profits else 'DISABLED'}")
         print("="*70)
         print()
         print("⚠️  CAPITAL PRESERVATION IS PRIORITY #1")
         print("⚠️  ONLY HIGH-CONFIDENCE TRADES")
         print("⚠️  NO REVENGE TRADING")
+        print("⚠️  PROFITS COMPOUND AUTOMATICALLY")
         print()
         print("="*70)
         print()
@@ -248,9 +254,36 @@ class LiveTradingAgent:
         
         print("✅ Trade logged (execution disabled for safety)")
     
+    def check_and_update_capital(self):
+        """Check balance and update capital (for compounding)."""
+        try:
+            balance = self.client.get_balance()
+            current_usdc = float(balance.get("usdc", 0))
+            
+            if current_usdc > 0:
+                # Calculate profit/loss
+                pnl = current_usdc - self.initial_capital
+                self.total_pnl = pnl
+                
+                # Update capital with current balance (compounding)
+                if self.compound_profits:
+                    old_capital = self.capital
+                    self.capital = current_usdc
+                    
+                    if abs(self.capital - old_capital) > 0.01:
+                        change = self.capital - old_capital
+                        print(f"💰 Capital updated: ${old_capital:.2f} → ${self.capital:.2f} ({change:+.2f})")
+                        print(f"   Total P&L: ${self.total_pnl:+.2f} ({self.total_pnl/self.initial_capital*100:+.1f}%)")
+        except Exception as e:
+            print(f"⚠️  Could not check balance: {e}")
+    
     def run_cycle(self):
         """Run one trading cycle."""
         print(f"\n[{datetime.now().strftime('%H:%M:%S')}] 🔄 Starting cycle...")
+        
+        # Update capital from balance (compounding)
+        self.check_and_update_capital()
+        
         print(f"Capital: ${self.capital:.2f} | Daily P&L: ${self.daily_pnl:+.2f} | Trades: {self.trades_today}")
         print()
         
