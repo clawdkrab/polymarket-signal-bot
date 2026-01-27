@@ -25,8 +25,13 @@ class BTCPriceFeed:
         Returns:
             List of prices (oldest first)
         """
+        # Try Binance first (more reliable)
+        prices = self._get_backup_prices()
+        if prices:
+            return prices
+        
+        # Fallback to CoinCap
         try:
-            # CoinCap provides hourly data for free
             endpoint = f"{self.coincap_url}/assets/bitcoin/history"
             params = {
                 "interval": "h1",  # 1-hour intervals
@@ -43,12 +48,11 @@ class BTCPriceFeed:
             return prices[-hours_needed:] if prices else []
         
         except Exception as e:
-            print(f"⚠️  Error fetching BTC prices from CoinCap: {e}")
-            # Try backup source
-            return self._get_backup_prices()
+            print(f"⚠️  Both price sources failed: {e}")
+            return []
     
     def _get_backup_prices(self) -> List[float]:
-        """Backup price source using Binance public API."""
+        """Binance price source (primary, more reliable)."""
         try:
             endpoint = "https://api.binance.com/api/v3/klines"
             params = {
@@ -67,7 +71,7 @@ class BTCPriceFeed:
             return prices
         
         except Exception as e:
-            print(f"⚠️  Backup price source also failed: {e}")
+            # Silently fail, let caller handle
             return []
     
     def get_current_price(self) -> float:
