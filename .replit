@@ -1,0 +1,12 @@
+run = "python3 live_agent.py"
+language = "python3"
+entrypoint = "live_agent.py"
+
+[nix]
+channel = "stable-22_11"
+
+[env]
+PYTHONPATH = "$PYTHONPATH:src"
+
+[deployment]
+run = ["sh", "-c", "python3 live_agent.py"]

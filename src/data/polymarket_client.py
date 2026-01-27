@@ -16,19 +16,26 @@ from pathlib import Path
 class PolymarketClient:
     """Lightweight Polymarket CLOB API client."""
     
-    def __init__(self, credentials_path: str = None):
+    def __init__(self, credentials_path: str = None, credentials: dict = None):
         self.clob_url = "https://clob.polymarket.com"
         self.gamma_url = "https://gamma-api.polymarket.com"
         
         # Load API credentials
-        if credentials_path is None:
-            credentials_path = str(Path.home() / ".polymarket_credentials.json")
-        
-        with open(credentials_path) as f:
-            creds = json.load(f)
-            self.api_key = creds["api_key"]
-            self.secret = creds["secret"]
-            self.passphrase = creds["passphrase"]
+        if credentials:
+            # Use provided credentials dict
+            self.api_key = credentials["api_key"]
+            self.secret = credentials["secret"]
+            self.passphrase = credentials["passphrase"]
+        else:
+            # Load from file
+            if credentials_path is None:
+                credentials_path = str(Path.home() / ".polymarket_credentials.json")
+            
+            with open(credentials_path) as f:
+                creds = json.load(f)
+                self.api_key = creds["api_key"]
+                self.secret = creds["secret"]
+                self.passphrase = creds["passphrase"]
     
     def _sign_request(self, method: str, path: str, body: str = "") -> Dict[str, str]:
         """Generate HMAC signature for L2 authentication."""
@@ -78,14 +85,16 @@ class PolymarketClient:
     
     # ===== PUBLIC ENDPOINTS =====
     
-    def get_markets(self, limit: int = 100, next_cursor: str = None) -> List[dict]:
+    def get_markets(self, limit: int = 100, next_cursor: str = None, closed: bool = None) -> List[dict]:
         """Get all markets from Gamma API."""
         params = {"limit": limit}
         if next_cursor:
             params["next_cursor"] = next_cursor
+        if closed is not None:
+            params["closed"] = "true" if closed else "false"
         
         url = f"{self.gamma_url}/markets"
-        response = requests.get(url, params=params)
+        response = requests.get(url, params=params, timeout=15)
         response.raise_for_status()
         return response.json()
     
