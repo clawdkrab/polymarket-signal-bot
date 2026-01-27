@@ -47,7 +47,7 @@ class AutomatedTrader:
         print(f"Min Confidence: {self.config['risk_settings']['min_confidence']}%")
         print()
         print("⚡ WILL EXECUTE REAL TRADES AUTOMATICALLY")
-        print("⚠️  MetaMask approvals still need your click")
+        print("✅ 100% AUTOMATED - NO manual steps (balance is USDC in Polymarket)")
         print()
         print("="*70)
         print()
@@ -173,20 +173,21 @@ class AutomatedTrader:
             
             time.sleep(1)
             
-            # Step 6: Click Buy/Confirm
-            print("✅ Clicking Buy...")
+            # Step 6: Click Buy Up or Sell Down (no MetaMask needed!)
+            buy_button = f"Buy {button_text}" if signal['action'] == "UP" else f"Sell {button_text}"
+            print(f"✅ Clicking {buy_button}...")
             subprocess.run([
                 "clawdbot", "browser",
                 "--profile", "clawdkrab-chrome",
                 "--action", "act",
                 "--request", json.dumps({
                     "kind": "click",
-                    "text": "Buy"  # or "Confirm"
+                    "text": buy_button  # "Buy Up" or "Sell Down"
                 })
             ], timeout=30)
             
-            print("⏳ Waiting for MetaMask popup...")
-            print("   (User will approve MetaMask transaction)")
+            print("✅ Trade submitted! (Balance used: USDC already in Polymarket)")
+            print("✅ NO MetaMask approval needed!")
             
             # Log trade
             log_file = Path(__file__).parent / "src" / "memory" / "live_trades.jsonl"
