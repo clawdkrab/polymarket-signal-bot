@@ -320,8 +320,8 @@ class LiveTradingAgent:
         else:
             self.execute_trade(market, signal)
     
-    def run_continuous(self, check_interval: int = 300):
-        """Run continuously (check every 5 minutes)."""
+    def run_continuous(self, check_interval: int = 60):
+        """Run continuously (check every minute by default)."""
         print(f"🤖 LIVE MODE ACTIVATED")
         print(f"⏱️  Checking markets every {check_interval} seconds")
         print(f"🛑 Press Ctrl+C to stop")
@@ -363,7 +363,7 @@ def main():
     
     # Start agent
     agent = LiveTradingAgent(config_path="live_config.json", credentials=creds)
-    agent.run_continuous(check_interval=300)
+    agent.run_continuous(check_interval=60)  # Check every 60 seconds
 
 
 if __name__ == "__main__":
