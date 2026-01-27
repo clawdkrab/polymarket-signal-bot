@@ -132,7 +132,11 @@ class PolymarketClient:
     
     def get_balance(self) -> dict:
         """Get account balance."""
-        return self._request("GET", "/balances")
+        try:
+            return self._request("GET", "/balance")
+        except:
+            # Try plural form as fallback
+            return self._request("GET", "/balances")
     
     def get_open_orders(self) -> List[dict]:
         """Get all open orders."""

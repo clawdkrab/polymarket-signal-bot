@@ -100,11 +100,17 @@ class LiveTradingAgent:
         
         # Filter for crypto markets
         crypto_markets = []
+        btc_markets_debug = []
+        
         for market in all_markets:
             if not market.get("active") or market.get("closed"):
                 continue
             
             question = market.get("question", "").lower()
+            
+            # Debug: collect all BTC markets
+            if any(kw in question for kw in ["btc", "bitcoin"]):
+                btc_markets_debug.append(question)
             
             # Must contain crypto keywords
             has_crypto = any(kw in question for kw in self.config["trading_rules"]["preferred_markets"] + 
@@ -122,7 +128,13 @@ class LiveTradingAgent:
                 if volume > 1000:  # At least $1k volume
                     crypto_markets.append(market)
         
-        print(f"✅ Found {len(crypto_markets)} tradeable crypto markets")
+        print(f"✅ Found {len(crypto_markets)} tradeable 15-min markets")
+        
+        # Debug: show what BTC markets exist
+        if len(crypto_markets) == 0 and btc_markets_debug:
+            print(f"\n🔍 DEBUG: Found {len(btc_markets_debug)} BTC markets (but none match 15-min filter):")
+            for q in btc_markets_debug[:5]:
+                print(f"   - {q}")
         
         if crypto_markets:
             print("\nTop markets by volume:")
@@ -256,6 +268,9 @@ class LiveTradingAgent:
     
     def check_and_update_capital(self):
         """Check balance and update capital (for compounding)."""
+        if not self.compound_profits:
+            return
+            
         try:
             balance = self.client.get_balance()
             current_usdc = float(balance.get("usdc", 0))
@@ -266,16 +281,16 @@ class LiveTradingAgent:
                 self.total_pnl = pnl
                 
                 # Update capital with current balance (compounding)
-                if self.compound_profits:
-                    old_capital = self.capital
-                    self.capital = current_usdc
-                    
-                    if abs(self.capital - old_capital) > 0.01:
-                        change = self.capital - old_capital
-                        print(f"💰 Capital updated: ${old_capital:.2f} → ${self.capital:.2f} ({change:+.2f})")
-                        print(f"   Total P&L: ${self.total_pnl:+.2f} ({self.total_pnl/self.initial_capital*100:+.1f}%)")
+                old_capital = self.capital
+                self.capital = current_usdc
+                
+                if abs(self.capital - old_capital) > 0.01:
+                    change = self.capital - old_capital
+                    print(f"💰 Capital updated: ${old_capital:.2f} → ${self.capital:.2f} ({change:+.2f})")
+                    print(f"   Total P&L: ${self.total_pnl:+.2f} ({self.total_pnl/self.initial_capital*100:+.1f}%)")
         except Exception as e:
-            print(f"⚠️  Could not check balance: {e}")
+            # Balance check failed - just use manual capital tracking
+            pass
     
     def run_cycle(self):
         """Run one trading cycle."""
