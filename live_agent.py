@@ -117,30 +117,23 @@ class LiveTradingAgent:
             has_crypto = any(kw in question for kw in self.config["trading_rules"]["preferred_markets"] + 
                            self.config["trading_rules"]["backup_markets"])
             
-            # Check for 15-minute timeframe in question OR description
-            has_15min = (
-                any(kw in question for kw in self.config["trading_rules"]["required_keywords"]) or
-                any(kw in description for kw in self.config["trading_rules"]["required_keywords"]) or
-                "up or down" in question  # These are typically 15-min markets
-            )
-            
-            # Must NOT be long-term
+            # Must NOT be long-term junk
             is_longterm = any(kw in question for kw in self.config["trading_rules"]["avoid_keywords"])
             
-            if has_crypto and has_15min and not is_longterm:
+            if has_crypto and not is_longterm:
                 # Check if it has reasonable volume
                 volume = float(market.get("volume", 0))
                 if volume > 1000:  # At least $1k volume
                     crypto_markets.append(market)
         
-        print(f"✅ Found {len(crypto_markets)} tradeable 15-min markets")
+        print(f"✅ Found {len(crypto_markets)} tradeable BTC markets")
         
         # Debug: show what BTC markets exist
         if len(crypto_markets) == 0 and btc_markets_debug:
             print(f"\n🔍 DEBUG: Found {len(btc_markets_debug)} BTC markets total (none matched filters):")
             for q in btc_markets_debug[:5]:
                 print(f"   - {q}")
-            print(f"\n💡 Looking for markets with: 'up or down' OR '15 minute' in question/description")
+            print(f"\n⚠️  All filtered out by avoid_keywords")
         
         if crypto_markets:
             print("\nTop markets by volume:")
@@ -350,7 +343,7 @@ def main():
     print()
     print("⚠️" * 35)
     print()
-    print("     LIVE MODE - MONITORING FOR BTC 15-MIN MARKETS")
+    print("     LIVE MODE - MONITORING FOR BTC MARKETS")
     print()
     print("⚠️" * 35)
     print()

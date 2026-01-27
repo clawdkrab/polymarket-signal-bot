@@ -13,8 +13,7 @@
     "max_trades_per_day": 10,
     "preferred_markets": ["BTC", "bitcoin"],
     "backup_markets": ["ETH", "ethereum", "crypto"],
-    "required_keywords": ["15 minute", "15min", "15-minute"],
-    "avoid_keywords": ["long-term", "year", "2027", "2028", "2025", "2026", "GTA", "$1m", "$100k"]
+    "avoid_keywords": ["long-term", "year", "2027", "2028", "GTA", "$1m", "$100k", "2026"]
   },
   "safety": {
     "require_confirmation": false,

@@ -88,27 +88,30 @@ polymarket-btc-agent/
 
 ## 🚀 Quick Start
 
-### Setup
+### ⚡ Browser Mode (Recommended)
+
+**Why?** 15-minute BTC markets aren't available via REST API. Browser mode actually works.
 
 ```bash
-cd ~/clawd/polymarket-btc-agent
-pip3 install requests pandas numpy python-dotenv
+# Install dependencies
+pip install -r requirements.txt
+playwright install chromium
 
-# Credentials stored in ~/.polymarket_credentials.json
+# Run browser agent
+python browser_agent.py
 ```
 
-### Run
+See [BROWSER_MODE.md](BROWSER_MODE.md) for full setup guide.
+
+### 🔧 API Mode (Limited)
+
+Uses REST API to find markets, but 15-min markets don't appear in API responses.
 
 ```bash
-python3 main.py
+python live_agent.py
 ```
 
-The agent will:
-1. Search for active BTC 15-min markets
-2. Analyze each market for trading opportunities  
-3. Execute trades when high-confidence signals appear
-4. Log all decisions and track performance
-5. Repeat every 60 seconds
+Note: Will only find markets that exist in the public API (currently very limited for BTC).
 
 ### Stop
 
