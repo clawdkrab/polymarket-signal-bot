@@ -107,6 +107,7 @@ class LiveTradingAgent:
                 continue
             
             question = market.get("question", "").lower()
+            description = market.get("description", "").lower()
             
             # Debug: collect all BTC markets
             if any(kw in question for kw in ["btc", "bitcoin"]):
@@ -116,8 +117,12 @@ class LiveTradingAgent:
             has_crypto = any(kw in question for kw in self.config["trading_rules"]["preferred_markets"] + 
                            self.config["trading_rules"]["backup_markets"])
             
-            # Must contain 15-minute timeframe
-            has_15min = any(kw in question for kw in self.config["trading_rules"]["required_keywords"])
+            # Check for 15-minute timeframe in question OR description
+            has_15min = (
+                any(kw in question for kw in self.config["trading_rules"]["required_keywords"]) or
+                any(kw in description for kw in self.config["trading_rules"]["required_keywords"]) or
+                "up or down" in question  # These are typically 15-min markets
+            )
             
             # Must NOT be long-term
             is_longterm = any(kw in question for kw in self.config["trading_rules"]["avoid_keywords"])
@@ -132,9 +137,10 @@ class LiveTradingAgent:
         
         # Debug: show what BTC markets exist
         if len(crypto_markets) == 0 and btc_markets_debug:
-            print(f"\n🔍 DEBUG: Found {len(btc_markets_debug)} BTC markets (but none match 15-min filter):")
+            print(f"\n🔍 DEBUG: Found {len(btc_markets_debug)} BTC markets total (none matched filters):")
             for q in btc_markets_debug[:5]:
                 print(f"   - {q}")
+            print(f"\n💡 Looking for markets with: 'up or down' OR '15 minute' in question/description")
         
         if crypto_markets:
             print("\nTop markets by volume:")
