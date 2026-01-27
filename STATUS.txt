@@ -1,0 +1,63 @@
+🤖 POLYMARKET BOT STATUS
+
+===================================================================
+
+✅ BOT IS RUNNING
+
+PID: Check with: ps aux | grep automated_trader.py
+Log: ~/Desktop/projects/polymarket-btc-agent/trader.log
+
+===================================================================
+
+WHAT IT'S DOING:
+
+Every 60 seconds:
+1. Fetches BTC price
+2. Calculates RSI and momentum
+3. Checks if signal exists (RSI < 18 or > 72 with 70%+ confidence)
+4. If signal: Logs trade and alerts you (Clawd AI)
+5. If no signal: Waits 60s and repeats
+
+===================================================================
+
+CURRENT STATUS:
+
+Balance: $284.95
+Capital: $300.00
+Browser: Chrome (clawdkrab@gmail.com) - Connected
+MetaMask: Installed and connected
+Min Confidence: 70%
+
+Latest Analysis:
+- RSI: ~31 (neutral)
+- Signal: NONE (waiting for < 18 or > 72)
+- Status: Monitoring
+
+===================================================================
+
+WHEN SIGNAL TRIGGERS (FULLY AUTOMATED):
+
+Bot automatically executes via subprocess clawdbot calls:
+1. ✅ Navigate to Polymarket BTC Up/Down market
+2. ✅ Click UP or DOWN button (based on signal)
+3. ✅ Enter amount (calculated from confidence)
+4. ✅ Click Buy/Confirm
+5. ⏳ MetaMask popup → User approves (only manual step)
+
+Logged to: src/memory/live_trades.jsonl
+
+===================================================================
+
+TO STOP:
+
+kill $(cat ~/Desktop/projects/polymarket-btc-agent/trader.pid)
+
+===================================================================
+
+TO CHECK STATUS:
+
+tail -f ~/Desktop/projects/polymarket-btc-agent/trader.log
+
+===================================================================
+
+Last Updated: 2026-01-27 05:38 GMT
