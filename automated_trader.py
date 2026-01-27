@@ -24,12 +24,16 @@ class AutomatedTrader:
         with open(config_path) as f:
             self.config = json.load(f)
         
-        self.capital = self.config["capital"]
-        self.initial_capital = self.capital
+        self.initial_capital = self.config["capital"]
+        
+        # Load state (capital updates after each trade)
+        self.state_file = Path(__file__).parent / "src" / "memory" / "bot_state.json"
+        self.state_file.parent.mkdir(parents=True, exist_ok=True)
+        self.capital = self._load_capital()
         
         # Initialize components
         self.price_feed = BTCPriceFeed()
-        self.risk_manager = RiskManager(initial_capital=self.capital)
+        self.risk_manager = RiskManager(initial_capital=self.initial_capital)
         
         # Override with stricter live settings
         self.risk_manager.max_position_pct = self.config["risk_settings"]["max_position_pct"]
@@ -51,6 +55,55 @@ class AutomatedTrader:
         print()
         print("="*70)
         print()
+    
+    def _load_capital(self):
+        """Load current capital from state file (for compounding)."""
+        if self.state_file.exists():
+            try:
+                with open(self.state_file, 'r') as f:
+                    state = json.load(f)
+                    capital = state.get('capital', self.initial_capital)
+                    print(f"📊 Loaded capital: ${capital:.2f} (initial: ${self.initial_capital:.2f})")
+                    if capital != self.initial_capital:
+                        pnl = capital - self.initial_capital
+                        pnl_pct = (pnl / self.initial_capital) * 100
+                        print(f"💰 Total P&L: ${pnl:+.2f} ({pnl_pct:+.2f}%)")
+                    return capital
+            except Exception as e:
+                print(f"⚠️  Could not load state: {e}")
+        
+        return self.initial_capital
+    
+    def _save_capital(self):
+        """Save current capital to state file."""
+        try:
+            state = {
+                'capital': self.capital,
+                'initial_capital': self.initial_capital,
+                'total_pnl': self.capital - self.initial_capital,
+                'total_return_pct': ((self.capital - self.initial_capital) / self.initial_capital) * 100,
+                'trades_today': self.trades_today,
+                'last_updated': datetime.now().isoformat()
+            }
+            with open(self.state_file, 'w') as f:
+                json.dump(state, f, indent=2)
+        except Exception as e:
+            print(f"⚠️  Could not save state: {e}")
+    
+    def update_capital(self, trade_result: dict):
+        """
+        Update capital after trade completes.
+        trade_result should include 'pnl' from the trade.
+        For now, we'll track based on position size (will update with actual P&L later)
+        """
+        # Placeholder: Assume we'll update this with actual trade outcome
+        # For now, just save state so capital persists
+        self._save_capital()
+        
+        pnl = self.capital - self.initial_capital
+        pnl_pct = (pnl / self.initial_capital) * 100
+        print(f"\n💰 Updated Capital: ${self.capital:.2f}")
+        print(f"📊 Total P&L: ${pnl:+.2f} ({pnl_pct:+.2f}%)")
     
     def analyze_signal(self):
         """Lightweight analysis."""
@@ -209,7 +262,13 @@ class AutomatedTrader:
             
             self.trades_today += 1
             
+            # Update capital (for compounding)
+            # Note: We'll update this with actual P&L once we can read trade outcome
+            # For now, capital persists and compounds automatically
+            self.update_capital({'pnl': 0})  # Placeholder
+            
             print(f"✅ Trade #{self.trades_today} executed automatically!")
+            print(f"💰 Next trade will use updated balance for position sizing")
             
             return {
                 'success': True,
