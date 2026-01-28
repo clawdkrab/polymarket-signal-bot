@@ -18,7 +18,6 @@ TRADE_LOG="trade_executor.log"
 
 POSITION_SIZE="${POSITION_SIZE:-10.0}"
 CONFIDENCE="${CONFIDENCE:-60}"
-CHROME_PROFILE="${CHROME_PROFILE:-Default}"
 
 echo "=================================="
 echo "🤖 POLYMARKET BTC AGENT SUPERVISOR"
@@ -26,7 +25,7 @@ echo "=================================="
 echo "Repository: $REPO_DIR"
 echo "Position size: \$$POSITION_SIZE"
 echo "Confidence threshold: $CONFIDENCE%"
-echo "Chrome profile: $CHROME_PROFILE"
+echo "Chrome profile: Polymarket Bot [HARD-CODED]"
 echo "=================================="
 echo ""
 
@@ -71,7 +70,6 @@ start_trade_executor() {
         nohup python3 -u "$TRADE_EXECUTOR" \
             --position-size "$POSITION_SIZE" \
             --confidence "$CONFIDENCE" \
-            --profile "$CHROME_PROFILE" \
             > "$TRADE_LOG" 2>&1 &
         sleep 2
         

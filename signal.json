@@ -1,18 +1,18 @@
 {
-  "timestamp": "2026-01-28T18:18:57.027218+00:00",
-  "direction": "DOWN",
-  "confidence": 80,
-  "price": 89805.32,
+  "timestamp": "2026-01-28T18:33:06.534976+00:00",
+  "direction": "NO_TRADE",
+  "confidence": 0,
+  "price": 89770.75,
   "basis": {
-    "momentum_30s": -0.012,
-    "momentum_60s": -0.404,
-    "momentum_120s": 0.236,
-    "momentum_accel": -0.248,
-    "volatility_pct": 0.272,
-    "volatility_state": "expanding",
+    "momentum_30s": 0.0,
+    "momentum_60s": -0.051,
+    "momentum_120s": -0.097,
+    "momentum_accel": 0.097,
+    "volatility_pct": 0.27,
+    "volatility_state": "contracting",
     "trend_bias": "weak_down",
-    "distance_from_sma20": 0.08,
+    "distance_from_sma20": 0.079,
     "mean_reversion_pressure": "low",
-    "score": -0.3
+    "score": -0.1
   }
 }

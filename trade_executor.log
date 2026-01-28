@@ -10,9 +10,31 @@ Cooldown: 2 minutes between trades
 
 🚀 Trade executor starting...
 
-🚀 Starting Playwright with Chrome profile...
+
+================================================================================
+🔍 PRE-FLIGHT VERIFICATION - CHROME PROFILE CHECK
+================================================================================
+✓ Checking profile directory: /Users/clawd/Library/Application Support/Google/Chrome/Profile 1
+   ✅ Profile directory exists
+✓ Checking preferences file: /Users/clawd/Library/Application Support/Google/Chrome/Profile 1/Preferences
+   Profile name: Your Chrome
+   Google account: polymarketv2@gmail.com
+   ✅ Profile email verified: polymarketv2@gmail.com
+✓ Checking for MetaMask extension...
+⚠️  Warning: MetaMask extension not detected
+   This may cause trade execution to fail!
+
+================================================================================
+✅ PRE-FLIGHT VERIFICATION PASSED
+   Profile: Polymarket Bot (polymarketv2@gmail.com)
+   Directory: /Users/clawd/Library/Application Support/Google/Chrome/Profile 1
+================================================================================
+
+🚀 Starting Playwright with verified Chrome profile...
    Profile path: /Users/clawd/Library/Application Support/Google/Chrome/Profile 1
-✅ Browser started
+================================================================================
+✅ Using Chrome profile: Polymarket Bot (polymarketv2@gmail.com) — verified
+================================================================================
 
 🧭 Navigating to https://polymarket.com/crypto/15M...
 ✅ At crypto/15M page
@@ -20,12 +42,6 @@ Cooldown: 2 minutes between trades
 
 🔄 Starting trade monitoring loop...
 
-[18:17:34] Cycle #1 | Trades: 0
-[18:17:44] Cycle #2 | Trades: 0
-[18:17:54] Cycle #3 | Trades: 0
-[18:18:04] Cycle #4 | Trades: 0
-[18:18:14] Cycle #5 | Trades: 0
-[18:18:24] Cycle #6 | Trades: 0
-[18:18:34] Cycle #7 | Trades: 0
-[18:18:44] Cycle #8 | Trades: 0
-[18:18:55] Cycle #9 | Trades: 0
+[18:32:43] Cycle #1 | Trades: 0
+[18:32:53] Cycle #2 | Trades: 0
+[18:33:03] Cycle #3 | Trades: 0

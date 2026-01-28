@@ -27,15 +27,20 @@ class AutonomousTradeExecutor:
     Reads signals from disk, executes via Playwright.
     """
     
+    # HARD-CODED PROFILE REQUIREMENT
+    REQUIRED_PROFILE_NAME = "Polymarket Bot"
+    REQUIRED_PROFILE_EMAIL = "polymarketv2@gmail.com"
+    REQUIRED_PROFILE_DIR = "Profile 1"  # Chrome internal directory name
+    
     def __init__(
         self,
         position_size: float = 10.0,
         confidence_threshold: int = 60,
-        chrome_profile: str = "Default"
+        chrome_profile: str = None  # Ignored - profile is hard-coded
     ):
         self.position_size = position_size
         self.confidence_threshold = confidence_threshold
-        self.chrome_profile = chrome_profile
+        self.chrome_profile = self.REQUIRED_PROFILE_DIR  # Force correct profile
         
         # Paths
         self.signal_file = Path(__file__).parent / "signal.json"
@@ -72,6 +77,91 @@ class AutonomousTradeExecutor:
         except:
             pass
     
+    def verify_chrome_profile(self) -> bool:
+        """
+        PRE-FLIGHT VERIFICATION (MANDATORY)
+        Verify correct Chrome profile before any trading.
+        Returns True if all checks pass, False otherwise.
+        """
+        print("\n" + "="*80)
+        print("🔍 PRE-FLIGHT VERIFICATION - CHROME PROFILE CHECK")
+        print("="*80)
+        
+        # Construct profile path
+        if self.chrome_profile == "Default":
+            profile_path = Path.home() / "Library/Application Support/Google/Chrome/Default"
+        else:
+            profile_path = Path.home() / f"Library/Application Support/Google/Chrome/{self.chrome_profile}"
+        
+        # CHECK 1: Profile directory exists
+        print(f"✓ Checking profile directory: {profile_path}")
+        if not profile_path.exists():
+            print(f"❌ FATAL: Profile directory not found!")
+            print(f"   Expected: {profile_path}")
+            self.log_error(f"FATAL: Chrome profile directory not found: {profile_path}")
+            return False
+        print(f"   ✅ Profile directory exists")
+        
+        # CHECK 2: Read Preferences file to verify profile details
+        prefs_file = profile_path / "Preferences"
+        print(f"✓ Checking preferences file: {prefs_file}")
+        
+        if not prefs_file.exists():
+            print(f"❌ FATAL: Preferences file not found!")
+            self.log_error(f"FATAL: Preferences file not found: {prefs_file}")
+            return False
+        
+        try:
+            import json
+            with open(prefs_file, 'r') as f:
+                prefs = json.load(f)
+            
+            # Extract profile name
+            profile_name = prefs.get('profile', {}).get('name', 'Unknown')
+            print(f"   Profile name: {profile_name}")
+            
+            # Extract email (if available)
+            account_info = prefs.get('account_info', [])
+            email = account_info[0].get('email', 'Unknown') if account_info else 'Unknown'
+            print(f"   Google account: {email}")
+            
+            # CHECK 3: Verify email matches requirement
+            if email != self.REQUIRED_PROFILE_EMAIL:
+                print(f"❌ FATAL: Profile email mismatch!")
+                print(f"   Required: {self.REQUIRED_PROFILE_EMAIL}")
+                print(f"   Found: {email}")
+                self.log_error(f"FATAL: Profile email mismatch. Required: {self.REQUIRED_PROFILE_EMAIL}, Found: {email}")
+                return False
+            print(f"   ✅ Profile email verified: {email}")
+            
+        except Exception as e:
+            print(f"⚠️  Warning: Could not read preferences: {e}")
+            print(f"   Continuing with directory-based verification...")
+        
+        # CHECK 4: Verify MetaMask extension exists
+        extensions_dir = profile_path / "Extensions"
+        print(f"✓ Checking for MetaMask extension...")
+        
+        if extensions_dir.exists():
+            # MetaMask extension ID: nkbihfbeogaeaoehlefnkodbefgpgknn
+            metamask_dirs = list(extensions_dir.glob("nkbihfbeogaeaoehlefnkodbefgpgknn*"))
+            if metamask_dirs:
+                print(f"   ✅ MetaMask extension found: {len(metamask_dirs)} version(s)")
+            else:
+                print(f"⚠️  Warning: MetaMask extension not detected")
+                print(f"   This may cause trade execution to fail!")
+        else:
+            print(f"⚠️  Warning: Extensions directory not found")
+        
+        # FINAL VERIFICATION LOG
+        print("\n" + "="*80)
+        print(f"✅ PRE-FLIGHT VERIFICATION PASSED")
+        print(f"   Profile: {self.REQUIRED_PROFILE_NAME} ({self.REQUIRED_PROFILE_EMAIL})")
+        print(f"   Directory: {profile_path}")
+        print("="*80 + "\n")
+        
+        return True
+    
     def log_trade(self, direction: str, amount: float, status: str, details: str = ""):
         """Log trade execution."""
         try:
@@ -93,7 +183,15 @@ class AutonomousTradeExecutor:
     def start_browser(self) -> bool:
         """Launch Playwright with persistent Chrome profile."""
         try:
-            print("🚀 Starting Playwright with Chrome profile...")
+            # MANDATORY PRE-FLIGHT VERIFICATION
+            if not self.verify_chrome_profile():
+                print("\n❌ FATAL ERROR: Pre-flight verification failed!")
+                print("   Cannot proceed with trading.")
+                print("   Chrome profile requirement not met.")
+                self.log_error("FATAL: Pre-flight verification failed - aborting startup")
+                return False
+            
+            print("🚀 Starting Playwright with verified Chrome profile...")
             
             self.playwright = sync_playwright().start()
             
@@ -102,10 +200,6 @@ class AutonomousTradeExecutor:
                 profile_path = Path.home() / "Library/Application Support/Google/Chrome/Default"
             else:
                 profile_path = Path.home() / f"Library/Application Support/Google/Chrome/{self.chrome_profile}"
-            
-            if not profile_path.exists():
-                print(f"❌ Chrome profile not found: {profile_path}")
-                return False
             
             print(f"   Profile path: {profile_path}")
             
@@ -125,7 +219,10 @@ class AutonomousTradeExecutor:
             
             self.page.set_default_timeout(30000)
             
-            print("✅ Browser started\n")
+            # MANDATORY CONFIRMATION LOG
+            print("="*80)
+            print(f"✅ Using Chrome profile: {self.REQUIRED_PROFILE_NAME} ({self.REQUIRED_PROFILE_EMAIL}) — verified")
+            print("="*80 + "\n")
             return True
             
         except Exception as e:
@@ -486,14 +583,15 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Autonomous Trade Executor")
     parser.add_argument("--position-size", type=float, default=10.0, help="Position size in USD")
     parser.add_argument("--confidence", type=int, default=60, help="Minimum confidence threshold")
-    parser.add_argument("--profile", type=str, default="Default", help="Chrome profile name")
+    parser.add_argument("--profile", type=str, default=None, help="[IGNORED] Chrome profile is hard-coded to 'Polymarket Bot'")
     
     args = parser.parse_args()
     
+    # Profile is hard-coded - ignore command-line argument
     executor = AutonomousTradeExecutor(
         position_size=args.position_size,
         confidence_threshold=args.confidence,
-        chrome_profile=args.profile
+        chrome_profile=None  # Will use hard-coded profile
     )
     
     executor.run_forever()

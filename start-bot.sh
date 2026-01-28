@@ -9,14 +9,13 @@ set -e
 cd "$(dirname "$0")"
 
 # Configuration
-export CHROME_PROFILE="Profile 1"      # Polymarket Bot profile
 export POSITION_SIZE=10.0              # Trade size in USD
 export CONFIDENCE=60                   # Minimum confidence threshold
 
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 echo "🤖 POLYMARKET BTC AGENT - QUICK START"
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-echo "Profile:     $CHROME_PROFILE (polymarketv2@gmail.com)"
+echo "Profile:     Polymarket Bot (polymarketv2@gmail.com) [HARD-CODED]"
 echo "Position:    \$$POSITION_SIZE per trade"
 echo "Confidence:  $CONFIDENCE% minimum"
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
