@@ -1,5 +1,5 @@
-run = "python3 signal_bot.py"
-modules = ["python-3.11"]
+run = "python3 signal_bot_rest.py"
+entrypoint = "signal_bot_rest.py"
 
 [nix]
 channel = "stable-24_05"
