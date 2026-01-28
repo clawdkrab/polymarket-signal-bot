@@ -97,26 +97,22 @@ class AutonomousTradeExecutor:
             
             self.playwright = sync_playwright().start()
             
-            # Use existing Chrome profile directory
-            chrome_user_data = Path.home() / "Library/Application Support/Google/Chrome"
+            # Construct full path to specific Chrome profile
+            if self.chrome_profile == "Default":
+                profile_path = Path.home() / "Library/Application Support/Google/Chrome/Default"
+            else:
+                profile_path = Path.home() / f"Library/Application Support/Google/Chrome/{self.chrome_profile}"
             
-            if not chrome_user_data.exists():
-                print(f"❌ Chrome user data dir not found: {chrome_user_data}")
+            if not profile_path.exists():
+                print(f"❌ Chrome profile not found: {profile_path}")
                 return False
             
-            print(f"   User data dir: {chrome_user_data}")
-            print(f"   Profile: {self.chrome_profile}")
+            print(f"   Profile path: {profile_path}")
             
             self.context = self.playwright.chromium.launch_persistent_context(
-                user_data_dir=str(chrome_user_data),
+                user_data_dir=str(profile_path),
                 channel="chrome",  # Use installed Chrome (not Chromium)
                 headless=False,  # Must be visible for MetaMask
-                args=[
-                    f'--profile-directory={self.chrome_profile}',
-                    '--disable-blink-features=AutomationControlled',
-                    '--no-sandbox',
-                    '--disable-web-security'
-                ],
                 viewport={"width": 1920, "height": 1080},
                 ignore_default_args=["--enable-automation"]
             )

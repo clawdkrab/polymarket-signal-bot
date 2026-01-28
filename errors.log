@@ -21,3 +21,104 @@ Call log:
 
 [2026-01-28T17:41:51.022319] Browser start failed: It looks like you are using Playwright Sync API inside the asyncio loop.
 Please use the Async API instead.
+[2026-01-28T18:05:25.858983] Browser start failed: BrowserType.launch_persistent_context: Timeout 180000ms exceeded.
+Call log:
+  - <launching> /Applications/Google Chrome.app/Contents/MacOS/Google Chrome --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-extensions --disable-features=AcceptCHFrame,AvoidUnnecessaryBeforeUnloadCheckSync,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,Translate,AutoDeElevate,RenderDocument,OptimizationHints --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --no-sandbox --profile-directory=Profile 1 --disable-blink-features=AutomationControlled --no-sandbox --disable-web-security --user-data-dir=/Users/clawd/Library/Application Support/Google/Chrome --remote-debugging-pipe about:blank
+  - <launched> pid=11280
+  - [pid=11280][err] [0128/180155.896878:ERROR:chrome/app/chrome_main_delegate.cc:1062] Web security may only be disabled if '--user-data-dir' is also specified with a non-default value.
+  - [pid=11280][err]
+  - [pid=11280][err] DevTools remote debugging requires a non-default data directory. Specify this using --user-data-dir.
+  - [pid=11280][err] [11280:221637:0128/180156.825053:ERROR:components/signin/public/webdata/token_service_table.cc:220] Failed to decrypt token for service AccountId-116541503457797822359
+  - [pid=11280][err] Trying to load the allocator multiple times. This is *not* supported.
+  - [pid=11280][err] [11280:221627:0128/180158.617597:ERROR:google_apis/gcm/engine/gcm_store_impl.cc:941] Failed to restore security token.
+  - [pid=11280][err] [11280:221630:0128/180159.632724:ERROR:google_apis/gcm/engine/registration_request.cc:291] Registration response error message: DEPRECATED_ENDPOINT
+  - [pid=11280][err] [11340:222415:0128/180215.257651:VERBOSE1:chrome/updater/updater.cc:431] Version: 144.0.7547.0, opt, ARM_64, command line: /Users/clawd/Library/Application Support/Google/GoogleUpdater/144.0.7547.0/GoogleUpdater.app/Contents/MacOS/GoogleUpdater --wake-all --enable-logging --vmodule=*/components/update_client/*=2,*/chrome/enterprise_companion/*=2,*/chrome/updater/*=2
+  - [pid=11280][err] [11340:222415:0128/180215.257958:VERBOSE1:chrome/updater/updater.cc:434] OS version: 15.6.0, System uptime (seconds): 17647, parent pid: 11280
+  - [pid=11280][err] [11340:222415:0128/180215.259668:VERBOSE2:chrome/updater/event_history.cc:227] Emitted a UPDATER_PROCESS START event to the history log
+  - [pid=11280][err] [11342:222419:0128/180215.264436:VERBOSE1:chrome/updater/updater.cc:431] Version: 144.0.7547.0, opt, ARM_64, command line: /Users/clawd/Library/Application Support/Google/GoogleUpdater/144.0.7547.0/GoogleUpdater.app/Contents/MacOS/GoogleUpdater --crash-handler --database=/Users/clawd/Library/Application Support/Google/GoogleUpdater/144.0.7547.0/Crashpad --url=https://clients2.google.com/cr/report --annotation=prod=Update4 --annotation=ver=144.0.7547.0 --handshake-fd=6 --enable-logging --vmodule=*/components/update_client/*=2,*/chrome/enterprise_companion/*=2,*/chrome/updater/*=2
+  - [pid=11280][err] [11342:222419:0128/180215.264574:VERBOSE1:chrome/updater/updater.cc:434] OS version: 15.6.0, System uptime (seconds): 17647, parent pid: 1
+  - [pid=11280][err] [11342:222419:0128/180215.265825:VERBOSE2:chrome/updater/event_history.cc:227] Emitted a UPDATER_PROCESS START event to the history log
+  - [pid=11280][err] [11340:222415:0128/180215.266111:VERBOSE1:chrome/updater/crash_reporter.cc:122] Crash handler launched and ready.
+  - [pid=11280][err] [11340:222415:0128/180215.266530:VERBOSE1:chrome/updater/crash_client.cc:105] Found 0 completed crash reports
+  - [pid=11280][err] [11340:222415:0128/180215.266570:VERBOSE1:chrome/updater/crash_client.cc:123] Found 0 pending crash reports
+  - [pid=11280][err] [11340:222415:0128/180215.266608:ERROR:third_party/crashpad/crashpad/util/file/file_io_posix.cc:145] open /Users/clawd/Library/Application Support/Google/RLZ/Crashpad/settings.dat: No such file or directory (2)
+  - [pid=11280][err] [11340:222415:0128/180215.266644:VERBOSE1:chrome/updater/updater.cc:106] Crash reporting initialized.
+  - [pid=11280][err] [11340:222427:0128/180215.266824:VERBOSE1:chrome/updater/app/app_wakeall.cc:56] Launching `/Users/clawd/Library/Application Support/Google/GoogleUpdater/144.0.7547.0/GoogleUpdater.app/Contents/MacOS/GoogleUpdater --wake`
+  - [pid=11280][err] [11343:222431:0128/180215.271750:VERBOSE1:chrome/updater/updater.cc:431] Version: 144.0.7547.0, opt, ARM_64, command line: /Users/clawd/Library/Application Support/Google/GoogleUpdater/144.0.7547.0/GoogleUpdater.app/Contents/MacOS/GoogleUpdater --wake --enable-logging --vmodule=*/components/update_client/*=2,*/chrome/enterprise_companion/*=2,*/chrome/updater/*=2
+  - [pid=11280][err] [11343:222431:0128/180215.271907:VERBOSE1:chrome/updater/updater.cc:434] OS version: 15.6.0, System uptime (seconds): 17647, parent pid: 11340
+  - [pid=11280][err] [11343:222431:0128/180215.273243:VERBOSE2:chrome/updater/event_history.cc:227] Emitted a UPDATER_PROCESS START event to the history log
+  - [pid=11280][err] [11345:222435:0128/180215.277610:VERBOSE1:chrome/updater/updater.cc:431] Version: 144.0.7547.0, opt, ARM_64, command line: /Users/clawd/Library/Application Support/Google/GoogleUpdater/144.0.7547.0/GoogleUpdater.app/Contents/MacOS/GoogleUpdater --crash-handler --database=/Users/clawd/Library/Application Support/Google/GoogleUpdater/144.0.7547.0/Crashpad --url=https://clients2.google.com/cr/report --annotation=prod=Update4 --annotation=ver=144.0.7547.0 --handshake-fd=6 --enable-logging --vmodule=*/components/update_client/*=2,*/chrome/enterprise_companion/*=2,*/chrome/updater/*=2
+  - [pid=11280][err] [11345:222435:0128/180215.277723:VERBOSE1:chrome/updater/updater.cc:434] OS version: 15.6.0, System uptime (seconds): 17647, parent pid: 1
+  - [pid=11280][err] [11345:222435:0128/180215.278865:VERBOSE2:chrome/updater/event_history.cc:227] Emitted a UPDATER_PROCESS START event to the history log
+  - [pid=11280][err] [11343:222431:0128/180215.279148:VERBOSE1:chrome/updater/crash_reporter.cc:122] Crash handler launched and ready.
+  - [pid=11280][err] [11343:222431:0128/180215.279514:VERBOSE1:chrome/updater/crash_client.cc:105] Found 0 completed crash reports
+  - [pid=11280][err] [11343:222431:0128/180215.279555:VERBOSE1:chrome/updater/crash_client.cc:123] Found 0 pending crash reports
+  - [pid=11280][err] [11343:222431:0128/180215.279589:ERROR:third_party/crashpad/crashpad/util/file/file_io_posix.cc:145] open /Users/clawd/Library/Application Support/Google/RLZ/Crashpad/settings.dat: No such file or directory (2)
+  - [pid=11280][err] [11343:222431:0128/180215.279619:VERBOSE1:chrome/updater/updater.cc:106] Crash reporting initialized.
+  - [pid=11280][err] [11343:222431:0128/180215.279718:VERBOSE1:chrome/updater/ipc/update_service_internal_proxy_mojo.cc:59] Run
+  - [pid=11280][err] [11280:221630:0128/180220.559887:ERROR:google_apis/gcm/engine/registration_request.cc:291] Registration response error message: DEPRECATED_ENDPOINT
+  - [pid=11280][err] [11343:222431:0128/180232.774778:VERBOSE1:chrome/updater/app/app.cc:53] Shutdown: 0
+  - [pid=11280][err] [11343:222431:0128/180232.775653:VERBOSE2:chrome/updater/event_history.cc:227] Emitted a UPDATER_PROCESS END event to the history log
+  - [pid=11280][err] [11343:222431:0128/180232.775682:VERBOSE1:chrome/updater/updater.cc:468] UpdaterMain (--wake) returned 0.
+  - [pid=11280][err] [11340:222427:0128/180232.952884:VERBOSE1:chrome/updater/app/app_wakeall.cc:66] `/Users/clawd/Library/Application Support/Google/GoogleUpdater/144.0.7547.0/GoogleUpdater.app/Contents/MacOS/GoogleUpdater --wake` exited 0
+  - [pid=11280][err] [11340:222415:0128/180232.953182:VERBOSE1:chrome/updater/app/app.cc:53] Shutdown: 0
+  - [pid=11280][err] [11340:222415:0128/180232.953765:VERBOSE2:chrome/updater/event_history.cc:227] Emitted a UPDATER_PROCESS END event to the history log
+  - [pid=11280][err] [11340:222415:0128/180232.953797:VERBOSE1:chrome/updater/updater.cc:468] UpdaterMain (--wake-all) returned 0.
+  - [pid=11280][err] [11345:222435:0128/180242.809395:VERBOSE2:chrome/updater/event_history.cc:227] Emitted a UPDATER_PROCESS END event to the history log
+  - [pid=11280][err] [11345:222435:0128/180242.809417:VERBOSE1:chrome/updater/updater.cc:468] UpdaterMain (--crash-handler) returned 0.
+  - [pid=11280][err] [11342:222419:0128/180242.810470:VERBOSE2:chrome/updater/event_history.cc:227] Emitted a UPDATER_PROCESS END event to the history log
+  - [pid=11280][err] [11342:222419:0128/180242.810495:VERBOSE1:chrome/updater/updater.cc:468] UpdaterMain (--crash-handler) returned 0.
+  - [pid=11280][err] [11280:221630:0128/180317.224765:ERROR:google_apis/gcm/engine/registration_request.cc:291] Registration response error message: DEPRECATED_ENDPOINT
+  - [pid=11280][err] [11280:221630:0128/180445.315166:ERROR:google_apis/gcm/engine/registration_request.cc:291] Registration response error message: DEPRECATED_ENDPOINT
+
+[2026-01-28T18:05:55.893343] Browser start failed: It looks like you are using Playwright Sync API inside the asyncio loop.
+Please use the Async API instead.
+[2026-01-28T18:06:25.908939] Browser start failed: It looks like you are using Playwright Sync API inside the asyncio loop.
+Please use the Async API instead.
+[2026-01-28T18:06:55.952061] Browser start failed: It looks like you are using Playwright Sync API inside the asyncio loop.
+Please use the Async API instead.
+[2026-01-28T18:07:25.983449] Browser start failed: It looks like you are using Playwright Sync API inside the asyncio loop.
+Please use the Async API instead.
+[2026-01-28T18:07:55.990894] Browser start failed: It looks like you are using Playwright Sync API inside the asyncio loop.
+Please use the Async API instead.
+[2026-01-28T18:08:26.114824] Browser start failed: It looks like you are using Playwright Sync API inside the asyncio loop.
+Please use the Async API instead.
+[2026-01-28T18:08:56.220188] Browser start failed: It looks like you are using Playwright Sync API inside the asyncio loop.
+Please use the Async API instead.
+[2026-01-28T18:09:26.297966] Browser start failed: It looks like you are using Playwright Sync API inside the asyncio loop.
+Please use the Async API instead.
+[2026-01-28T18:09:56.317330] Browser start failed: It looks like you are using Playwright Sync API inside the asyncio loop.
+Please use the Async API instead.
+[2026-01-28T18:10:26.361283] Browser start failed: It looks like you are using Playwright Sync API inside the asyncio loop.
+Please use the Async API instead.
+[2026-01-28T18:10:56.374549] Browser start failed: It looks like you are using Playwright Sync API inside the asyncio loop.
+Please use the Async API instead.
+[2026-01-28T18:11:26.425953] Browser start failed: It looks like you are using Playwright Sync API inside the asyncio loop.
+Please use the Async API instead.
+[2026-01-28T18:11:56.471127] Browser start failed: It looks like you are using Playwright Sync API inside the asyncio loop.
+Please use the Async API instead.
+[2026-01-28T18:12:26.543599] Browser start failed: It looks like you are using Playwright Sync API inside the asyncio loop.
+Please use the Async API instead.
+[2026-01-28T18:12:56.594138] Browser start failed: It looks like you are using Playwright Sync API inside the asyncio loop.
+Please use the Async API instead.
+[2026-01-28T18:14:46.059741] Browser start failed: BrowserType.launch_persistent_context: Target page, context or browser has been closed
+Browser logs:
+
+<launching> /Applications/Google Chrome.app/Contents/MacOS/Google Chrome --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-extensions --disable-features=AcceptCHFrame,AvoidUnnecessaryBeforeUnloadCheckSync,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,Translate,AutoDeElevate,RenderDocument,OptimizationHints --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --no-sandbox --profile-directory=Profile 1 --disable-blink-features=AutomationControlled --no-sandbox --disable-web-security --user-data-dir=/Users/clawd/Library/Application Support/Google/Chrome --remote-debugging-pipe about:blank
+<launched> pid=11959
+[pid=11959][err] [0128/181446.024398:ERROR:chrome/app/chrome_main_delegate.cc:1062] Web security may only be disabled if '--user-data-dir' is also specified with a non-default value.
+[pid=11959][out] Opening in existing browser session.
+Call log:
+  - <launching> /Applications/Google Chrome.app/Contents/MacOS/Google Chrome --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-extensions --disable-features=AcceptCHFrame,AvoidUnnecessaryBeforeUnloadCheckSync,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,Translate,AutoDeElevate,RenderDocument,OptimizationHints --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --no-sandbox --profile-directory=Profile 1 --disable-blink-features=AutomationControlled --no-sandbox --disable-web-security --user-data-dir=/Users/clawd/Library/Application Support/Google/Chrome --remote-debugging-pipe about:blank
+  - <launched> pid=11959
+  - [pid=11959][err] [0128/181446.024398:ERROR:chrome/app/chrome_main_delegate.cc:1062] Web security may only be disabled if '--user-data-dir' is also specified with a non-default value.
+  - [pid=11959][out] Opening in existing browser session.
+  - [pid=11959] <gracefully close start>
+  - [pid=11959] <kill>
+  - [pid=11959] <will force kill>
+  - [pid=11959] exception while trying to kill process: Error: kill EPERM
+  - [pid=11959] <process did exit: exitCode=0, signal=null>
+  - [pid=11959] starting temporary directories cleanup
+  - [pid=11959] finished temporary directories cleanup
+  - [pid=11959] <gracefully close end>
+

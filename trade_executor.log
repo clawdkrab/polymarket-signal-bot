@@ -1,0 +1,28 @@
+================================================================================
+⚡ AUTONOMOUS TRADE EXECUTOR - HANDS-FREE MODE
+================================================================================
+Chrome profile: Profile 1
+Position size: $10.00
+Confidence threshold: 60%
+Signal source: /Users/clawd/clawd/polymarket-btc-agent/signal.json
+Cooldown: 2 minutes between trades
+================================================================================
+
+🚀 Trade executor starting...
+
+🚀 Starting Playwright with Chrome profile...
+   Profile path: /Users/clawd/Library/Application Support/Google/Chrome/Profile 1
+✅ Browser started
+
+🧭 Navigating to https://polymarket.com/crypto/15M...
+✅ At crypto/15M page
+✅ System ready. Monitoring for markets...
+
+🔄 Starting trade monitoring loop...
+
+[18:17:34] Cycle #1 | Trades: 0
+[18:17:44] Cycle #2 | Trades: 0
+[18:17:54] Cycle #3 | Trades: 0
+[18:18:04] Cycle #4 | Trades: 0
+[18:18:14] Cycle #5 | Trades: 0
+[18:18:24] Cycle #6 | Trades: 0

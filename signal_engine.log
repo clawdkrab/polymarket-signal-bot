@@ -1,2 +1,21 @@
 /Users/clawd/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
   warnings.warn(
+================================================================================
+🔄 CONTINUOUS SIGNAL ENGINE - ALWAYS-ON MODE
+================================================================================
+Signal output: /Users/clawd/clawd/polymarket-btc-agent/signal.json
+Signal log: /Users/clawd/clawd/polymarket-btc-agent/signals.jsonl
+Advanced strategy: True
+Loop interval: 3 seconds
+================================================================================
+
+🚀 Signal engine starting...
+
+[18:17:22] 🎯 NO_TRADE |  0% | $89,860 | Loop #1
+         Momentum: +0.048% (30s) | +0.297% (120s) | Accel: -0.249%
+         Trend: strong_up | Vol: expanding (0.27%) | MR: low
+
+[18:17:26] 🎯 DOWN     | 80% | $89,850 | Loop #2
+         Momentum: +0.037% (30s) | +0.286% (120s) | Accel: -0.249%
+         Trend: weak_down | Vol: expanding (0.27%) | MR: low
+

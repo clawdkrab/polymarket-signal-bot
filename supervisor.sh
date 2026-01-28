@@ -42,7 +42,7 @@ start_signal_engine() {
         echo "✅ Signal engine already running"
     else
         echo "🚀 Starting signal engine..."
-        nohup python3 "$SIGNAL_ENGINE" > "$SIGNAL_LOG" 2>&1 &
+        nohup python3 -u "$SIGNAL_ENGINE" > "$SIGNAL_LOG" 2>&1 &
         sleep 2
         
         if is_running "$SIGNAL_ENGINE"; then
@@ -68,7 +68,7 @@ start_trade_executor() {
         fi
         
         echo "🚀 Starting trade executor..."
-        nohup python3 "$TRADE_EXECUTOR" \
+        nohup python3 -u "$TRADE_EXECUTOR" \
             --position-size "$POSITION_SIZE" \
             --confidence "$CONFIDENCE" \
             --profile "$CHROME_PROFILE" \
