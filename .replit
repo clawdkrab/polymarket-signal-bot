@@ -1,10 +1,5 @@
 run = "python3 signal_bot.py"
-language = "python3"
 entrypoint = "signal_bot.py"
 
 [nix]
-channel = "stable-22_11"
-
-[deployment]
-run = ["python3", "signal_bot.py"]
-deploymentTarget = "cloudrun"
+channel = "stable-23_11"
