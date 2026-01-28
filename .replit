@@ -1,12 +1,10 @@
-run = "python3 live_agent.py"
+run = "python3 signal_bot.py"
 language = "python3"
-entrypoint = "live_agent.py"
+entrypoint = "signal_bot.py"
 
 [nix]
 channel = "stable-22_11"
 
-[env]
-PYTHONPATH = "$PYTHONPATH:src"
-
 [deployment]
-run = ["sh", "-c", "python3 live_agent.py"]
+run = ["python3", "signal_bot.py"]
+deploymentTarget = "cloudrun"

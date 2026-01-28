@@ -1,187 +1,118 @@
-# 🤖 Polymarket BTC Trading Agent
+# Polymarket BTC Agent
 
-**Autonomous trading agent for Bitcoin 15-minute Up/Down markets on Polymarket.**
+High-powered signal bot for Polymarket 15-minute crypto markets (BTC/ETH/SOL/XRP).
 
-## 🎯 Objective
+## Features
 
-Maximize net profit over a rolling 24-hour window while preserving capital. **Survival is mandatory. Blowing up is failure.**
+- ✅ **Real-time WebSocket** - Binance price streams (millisecond updates)
+- ✅ **Micro-momentum analysis** - 15s/30s/60s/120s horizons
+- ✅ **Aggressive signals** - Bias toward actionable UP/DOWN calls
+- ✅ **Pre-market ready** - Signals finalized 10 seconds before market opens
+- ✅ **24/7 operation** - Always hunting for trading opportunities
+- ✅ **Signal-only** - No trading execution (you trade manually)
 
-## 📊 Trading Universe
+## Quick Start
 
-- **Asset:** Bitcoin only
-- **Market Type:** Polymarket BTC 15-minute Up/Down resolution markets
-- **Timeframe:** 15-minute candles
-- **Capital:** $100 starting balance (currently ~$300 funded)
-
-## 🧠 Core Principles
-
-1. **Trade conservatively** when signal confidence is low
-2. **Increase position size** only when multiple independent signals align
-3. **Never risk more** than is rational for capital preservation
-4. **Treat this capital as irreplaceable**
-
-## 📈 Data Inputs
-
-- Recent BTC price data (last 50-100 resolved 15m markets)
-- Momentum and volatility patterns
-- Simple technical indicators (RSI, short-term MAs, trend strength)
-- Real-time public sentiment from X (Twitter)
-  - Sudden narrative shifts
-  - Political/macro headlines
-  - High-engagement posts affecting BTC sentiment
-  - Market reaction speed after news
-
-## 🎲 Decision Framework
-
-- Identify momentum continuation vs exhaustion
-- Avoid chop unless probability edge is clear
-- Prioritize high-conviction setups over frequency
-- Compound gains progressively when win-rate confirms edge
-- Reduce size immediately after drawdowns
-
-## ⚡ Execution Rules
-
-Every trade must include:
-- **Direction:** UP or DOWN
-- **Position size:** Dynamic based on confidence
-- **Reasoning:** Concise, factual, no storytelling
-- **Confidence score:** 0-100%
-
-**Do not trade if no clear edge exists.** Sitting out is a valid and often optimal decision.
-
-## 🛡️ Risk Management
-
-- Capital protection overrides profit seeking
-- If conditions become unclear or regime shifts occur, reduce exposure
-- Never revenge trade
-- Adapt position sizing dynamically based on recent performance
-
-## 📝 Self-Review
-
-After each trade, log:
-- Outcome
-- Whether the thesis played out
-- What signal mattered most
-
-Periodically reflect on:
-- What worked
-- What failed
-- What should be adjusted going forward
-
-## 🏗️ Project Structure
-
-```
-polymarket-btc-agent/
-├── src/
-│   ├── data/
-│   │   └── polymarket_client.py    # API integration
-│   ├── indicators/                 # (TODO) Technical indicators
-│   ├── trading/                    # (TODO) Strategy & risk mgmt
-│   ├── memory/                     # Trade logs & performance data
-│   │   ├── trades.jsonl           # All executed trades
-│   │   └── performance.json        # Running stats
-│   └── agent.py                    # Main autonomous loop
-├── main.py                         # Entry point
-├── requirements.txt
-└── README.md
-```
-
-## 🚀 Quick Start
-
-### ⚡ Browser Mode (Recommended)
-
-**Why?** 15-minute BTC markets aren't available via REST API. Browser mode actually works.
+### Local
 
 ```bash
 # Install dependencies
 pip install -r requirements.txt
-playwright install chromium
 
-# Run browser agent
-python browser_agent.py
+# Run the signal bot
+python3 signal_bot.py
 ```
 
-See [BROWSER_MODE.md](BROWSER_MODE.md) for full setup guide.
+### Replit (24/7 hosting)
 
-### 🔧 API Mode (Limited)
+1. Import this repo to Replit
+2. Click "Run"
+3. Bot starts automatically and runs forever
 
-Uses REST API to find markets, but 15-min markets don't appear in API responses.
+## Output Files
+
+- `latest_signals.json` - Current signals (always up-to-date)
+- `signals.jsonl` - Full history (append-only)
+- `readiness_snapshots.jsonl` - Finalized signals before market opens
+
+## Signal Schedule
+
+**Regular emissions:** Every 10 minutes  
+**Finalized signals:** :14:50, :29:50, :44:50, :59:50 (before market opens)
+
+Markets open at: **:00, :15, :30, :45**
+
+## Console Output Example
+
+```
+[19:44:50] 🎯 FINALIZED (Next Open: 19:45)
+🟢 BTC  UP       78% READY@19:44:50     mom30=+0.24% mom60=+0.18% slope=+0.08 vol=exp vwap=+0.3% z=+1.2σ
+🔴 ETH  DOWN     72% READY@19:44:50     mom30=-0.18% mom60=-0.26% slope=-0.12 vol=exp vwap=-0.4% z=-0.9σ
+🟢 SOL  UP       65% READY@19:44:50     mom30=+0.13% mom60=+0.11% slope=+0.05 vol=exp vwap=+0.1% z=+0.7σ
+⚪ XRP  NO_TRADE 45%                    mom30=+0.03% mom60=-0.01% slope=+0.02 vol=con vwap=+0.0% z=+0.1σ
+```
+
+## Trading Workflow
+
+1. Bot finalizes signals 10 seconds before market opens
+2. Check `latest_signals.json` for READY signals
+3. Trade signals with confidence >= 70% on Polymarket
+4. Open https://polymarket.com/crypto/15M
+5. Execute trades manually based on signals
+
+## Configuration
+
+Edit top of `signal_bot.py`:
+
+```python
+TOKENS = ['BTC', 'ETH', 'SOL', 'XRP']  # Tokens to watch
+CONFIDENCE_THRESHOLD = 60               # READY threshold
+EMISSION_INTERVAL = 600                 # 10 minutes
+FINALIZE_TIMES = ['14:50', '29:50', '44:50', '59:50']
+```
+
+## Documentation
+
+- **SIGNAL_BOT_README.md** - Complete guide (signal interpretation, timing, troubleshooting)
+- **MANUAL_TRADING.md** - Manual trading workflow
+- **AUTONOMOUS_SYSTEM.md** - Autonomous execution (advanced)
+
+## Components
+
+### Signal Bot (Production)
+- **signal_bot.py** - Main signal engine (USE THIS)
+- Real-time WebSocket + micro-momentum
+- Built for Polymarket 15m cadence
+
+### Autonomous Trading (Optional)
+- **autonomous_trade_executor.py** - Auto-execution via Playwright
+- **continuous_signal_engine.py** - Legacy signal engine
+- **supervisor.sh** - Process manager
+
+## Monitoring
 
 ```bash
-python live_agent.py
+# Watch live console output
+tail -f signal_bot.log
+
+# View current signals
+cat latest_signals.json | python3 -m json.tool
+
+# Monitor finalized signals
+tail readiness_snapshots.jsonl | python3 -m json.tool
 ```
 
-Note: Will only find markets that exist in the public API (currently very limited for BTC).
+## Tech Stack
 
-### Stop
+- Python 3.9+
+- WebSockets (Binance real-time streams)
+- NumPy (technical analysis)
+- Requests (REST fallback)
 
-Press `Ctrl+C` to stop the agent gracefully.
+## License
 
-## 📦 API Integration
+MIT
 
-Uses Polymarket REST APIs:
-- **CLOB API:** Order management, prices, orderbooks
-- **Gamma API:** Market discovery and metadata
-- **Data API:** Positions and trade history
+## Disclaimer
 
-Authentication: L2 HMAC-SHA256 signatures
-
-## 🔒 Security
-
-- API credentials stored in `~/.polymarket_credentials.json`
-- Credentials never committed to git (`.gitignore`)
-- All trading activity is non-custodial (wallet-based)
-
-## 📊 Current Status
-
-### ✅ Implemented
-- Polymarket API client (CLOB + Gamma)
-- Autonomous trading loop
-- Market discovery (BTC 15-min markets)
-- Trade logging and performance tracking
-- State persistence
-
-### 🚧 TODO
-- **Strategy logic** (currently conservative - always PASS)
-- Technical indicators (RSI, MAs, momentum)
-- Sentiment analysis (Twitter/X integration)
-- Position sizing algorithm
-- Risk management rules
-- Order execution (place/cancel orders)
-- Backtest framework
-
-## 🎯 Next Steps
-
-1. **Implement strategy logic** in `src/agent.py:analyze_market()`
-2. **Add technical indicators** in `src/indicators/`
-3. **Build sentiment analyzer** in `src/data/sentiment.py`
-4. **Add order execution** in `src/agent.py:execute_trade()`
-5. **Test with paper trading** before going live
-
-## 🧪 Testing
-
-Currently in **observation mode** - analyzes markets but doesn't place real orders yet.
-
-To enable live trading:
-1. Complete strategy implementation
-2. Test thoroughly
-3. Uncomment order execution code in `execute_trade()`
-
-## 📚 Resources
-
-- [Polymarket CLOB Docs](https://docs.polymarket.com/developers/CLOB/introduction)
-- [Gamma API Docs](https://docs.polymarket.com/developers/gamma-markets-api/overview)
-- [Market Discovery](https://docs.polymarket.com/developers/gamma-markets-api/get-markets)
-
-## ⚠️ Disclaimer
-
-This bot trades real money. Only run it if you:
-- Understand the risks
-- Can afford to lose the capital
-- Have thoroughly tested the strategy
-
-**Past performance does not guarantee future results.**
-
----
-
-**Status:** 🟡 In Development | **Last Update:** 2026-01-27
+This is a signal generation tool only. No trading execution. Use at your own risk.
