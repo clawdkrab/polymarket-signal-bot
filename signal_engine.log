@@ -11,7 +11,11 @@ Loop interval: 3 seconds
 
 🚀 Signal engine starting...
 
-[18:32:35] 🎯 NO_TRADE |  0% | $89,736 | Loop #1
-         Momentum: -0.038% (30s) | -0.135% (120s) | Accel: +0.097%
+[19:12:17] 🎯 NO_TRADE |  0% | $89,520 | Loop #1
+         Momentum: -0.029% (30s) | -0.330% (120s) | Accel: +0.301%
+         Trend: weak_down | Vol: contracting (0.27%) | MR: low
+
+[19:13:35] 🎯 DOWN     | 80% | $89,359 | Loop #21
+         Momentum: -0.209% (30s) | -0.510% (120s) | Accel: +0.300%
          Trend: weak_down | Vol: contracting (0.27%) | MR: low
 
