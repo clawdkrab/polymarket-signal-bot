@@ -1,73 +1,73 @@
 {
-  "timestamp": "2026-01-28T19:24:23.508565+00:00",
+  "timestamp": "2026-01-28T19:28:47.275901+00:00",
   "assets": {
     "BTC": {
       "direction": "UP",
-      "confidence": 95,
+      "confidence": 90,
       "basis": {
-        "momentum_30s": 0.245,
-        "momentum_60s": 0.038,
-        "momentum_120s": -0.212,
+        "momentum_30s": 0.221,
+        "momentum_60s": 0.014,
+        "momentum_120s": -0.235,
         "momentum_accel": 0.457,
-        "volatility_pct": 0.27,
+        "volatility_pct": 0.269,
         "volatility_state": "contracting",
-        "trend_bias": "weak_up",
-        "distance_from_sma20": -0.019,
+        "trend_bias": "strong_down",
+        "distance_from_sma20": -0.041,
         "mean_reversion_pressure": "low",
-        "score": 0.7
+        "score": 0.4
       },
-      "price": 89579.96
+      "price": 89558.98
     },
     "ETH": {
       "direction": "UP",
-      "confidence": 95,
+      "confidence": 90,
       "basis": {
-        "momentum_30s": 0.209,
-        "momentum_60s": 0.026,
-        "momentum_120s": 0.027,
+        "momentum_30s": 0.196,
+        "momentum_60s": 0.014,
+        "momentum_120s": 0.014,
         "momentum_accel": 0.182,
-        "volatility_pct": 0.316,
+        "volatility_pct": 0.315,
         "volatility_state": "contracting",
         "trend_bias": "strong_up",
-        "distance_from_sma20": 0.24,
+        "distance_from_sma20": 0.228,
         "mean_reversion_pressure": "low",
-        "score": 0.8
+        "score": 0.4
       },
-      "price": 3016.3
+      "price": 3015.92
     },
     "SOL": {
-      "direction": "NO_TRADE",
-      "confidence": 0,
+      "direction": "UP",
+      "confidence": 95,
       "basis": {
-        "momentum_30s": 0.198,
-        "momentum_60s": 0.095,
-        "momentum_120s": 0.254,
+        "momentum_30s": 0.206,
+        "momentum_60s": 0.103,
+        "momentum_120s": 0.262,
         "momentum_accel": -0.056,
         "volatility_pct": 0.324,
         "volatility_state": "contracting",
         "trend_bias": "weak_up",
-        "distance_from_sma20": 0.032,
+        "distance_from_sma20": 0.04,
         "mean_reversion_pressure": "low",
-        "score": 0.1
+        "score": 0.5
       },
-      "price": 126.21
+      "price": 126.22
     },
     "XRP": {
       "direction": "UP",
       "confidence": 95,
       "basis": {
-        "momentum_30s": 0.214,
-        "momentum_60s": 0.183,
-        "momentum_120s": 0.298,
+        "momentum_30s": 0.256,
+        "momentum_60s": 0.224,
+        "momentum_120s": 0.34,
         "momentum_accel": -0.084,
-        "volatility_pct": 0.299,
+        "volatility_pct": 0.301,
         "volatility_state": "contracting",
         "trend_bias": "strong_up",
-        "distance_from_sma20": 0.334,
+        "distance_from_sma20": 0.374,
         "mean_reversion_pressure": "low",
         "score": 0.6
       },
-      "price": 1.9195
+      "price": 1.9203
     }
   }
 }

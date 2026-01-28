@@ -1,0 +1,31 @@
+/Users/clawd/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
+  warnings.warn(
+================================================================================
+🚀 POLYMARKET SIGNAL BOT - ALWAYS HUNTING
+================================================================================
+Tokens: BTC, ETH, SOL, XRP
+Emission: Every 10 minutes
+Finalize: 14:50, 29:50, 44:50, 59:50
+Threshold: 60% for READY
+================================================================================
+
+🔌 Connecting to Binance WebSocket...
+   Streams: BTC, ETH, SOL, XRP
+
+✅ WebSocket connected
+🚀 Signal loop starting...
+
+
+[19:29:35] 📊 SIGNALS (Next Open: 19:30)
+⚪ BTC  NO_TRADE  0%                     mom30=-0.00% mom60=-0.00% slope=+0.00 vol=con vwap=+0.0% z=-1.4σ
+⚪ ETH  NO_TRADE  0%                     mom30=+0.00% mom60=+0.01% slope=-0.00 vol=con vwap=+0.0% z=+1.6σ
+⚪ SOL  NO_TRADE  0%                     mom30=+0.02% mom60=+0.02% slope=+0.01 vol=con vwap=+0.0% z=+2.0σ
+⚪ XRP  NO_TRADE  0%                     mom30=+0.02% mom60=+0.01% slope=+0.04 vol=exp vwap=+0.0% z=+0.3σ
+
+
+[19:29:45] 🎯 FINALIZED (Next Open: 19:30)
+⚪ BTC  NO_TRADE  0%                     mom30=-0.00% mom60=-0.00% slope=-0.00 vol=exp vwap=-0.0% z=-2.0σ
+⚪ ETH  NO_TRADE  0%                     mom30=-0.00% mom60=-0.00% slope=+0.00 vol=con vwap=-0.0% z=-1.0σ
+⚪ SOL  NO_TRADE  0%                     mom30=-0.02% mom60=-0.02% slope=-0.02 vol=exp vwap=-0.0% z=-2.8σ
+⚪ XRP  NO_TRADE  0%                     mom30=+0.01% mom60=-0.01% slope=+0.01 vol=con vwap=+0.0% z=-0.3σ
+
