@@ -19,8 +19,9 @@ sys.path.insert(0, str(Path(__file__).parent / "src"))
 try:
     from data.price_feed import BTCPriceFeed
     from indicators.technical import analyze_price_action
+    print("✅ Advanced multi-indicator strategy loaded")
 except ImportError:
-    print("⚠️  Using fallback strategy (Binance momentum only)")
+    print("⚠️  Advanced strategy unavailable - using fallback (Binance momentum only)")
     BTCPriceFeed = None
     analyze_price_action = None
 
@@ -112,8 +113,36 @@ class Autonomous15MTrader:
             return False
     
     def get_btc_signal(self):
-        """Get BTC trading signal."""
+        """Get BTC trading signal using multi-indicator analysis."""
         try:
+            # Try advanced strategy first
+            if BTCPriceFeed and analyze_price_action:
+                try:
+                    price_feed = BTCPriceFeed()
+                    hourly_prices = price_feed.get_recent_prices(minutes=240)
+                    
+                    if hourly_prices and len(hourly_prices) >= 20:
+                        # Interpolate to 15-min
+                        prices_15m = price_feed.estimate_15min_prices(hourly_prices)
+                        
+                        # Multi-indicator analysis
+                        analysis = analyze_price_action(prices_15m)
+                        
+                        signal = analysis["signal"]
+                        confidence = analysis["confidence"]
+                        rsi = analysis["rsi"]
+                        momentum = analysis["momentum"]
+                        
+                        print(f"   📊 RSI: {rsi:.1f} | Momentum: {momentum:+.2f}% | Signal: {signal} ({confidence}%)")
+                        
+                        return {
+                            'action': signal if signal in ['UP', 'DOWN'] else 'PASS',
+                            'confidence': confidence
+                        }
+                except Exception as e:
+                    print(f"   ⚠️  Advanced strategy failed: {e}, using fallback...")
+            
+            # Fallback: Simple Binance momentum
             import requests
             
             response = requests.get(
@@ -131,7 +160,7 @@ class Autonomous15MTrader:
                     avg_price = sum(closes[-10:]) / 10
                     momentum = ((recent_price / avg_price) - 1) * 100
                     
-                    print(f"   📊 BTC: ${recent_price:,.0f} | Momentum: {momentum:+.2f}%")
+                    print(f"   📊 BTC: ${recent_price:,.0f} | Momentum: {momentum:+.2f}% (fallback)")
                     
                     if momentum > 0.3:
                         return {'action': 'UP', 'confidence': min(75, 50 + abs(momentum)*10)}
