@@ -1,0 +1,73 @@
+{
+  "timestamp": "2026-01-28T19:19:35.913938+00:00",
+  "assets": {
+    "BTC": {
+      "direction": "NO_TRADE",
+      "confidence": 0,
+      "basis": {
+        "momentum_30s": 0.068,
+        "momentum_60s": -0.139,
+        "momentum_120s": -0.388,
+        "momentum_accel": 0.456,
+        "volatility_pct": 0.264,
+        "volatility_state": "contracting",
+        "trend_bias": "strong_down",
+        "distance_from_sma20": -0.187,
+        "mean_reversion_pressure": "low",
+        "score": 0.0
+      },
+      "price": 89421.74
+    },
+    "ETH": {
+      "direction": "NO_TRADE",
+      "confidence": 0,
+      "basis": {
+        "momentum_30s": 0.075,
+        "momentum_60s": -0.107,
+        "momentum_120s": -0.106,
+        "momentum_accel": 0.182,
+        "volatility_pct": 0.312,
+        "volatility_state": "contracting",
+        "trend_bias": "weak_down",
+        "distance_from_sma20": 0.113,
+        "mean_reversion_pressure": "low",
+        "score": 0.1
+      },
+      "price": 3012.29
+    },
+    "SOL": {
+      "direction": "NO_TRADE",
+      "confidence": 0,
+      "basis": {
+        "momentum_30s": 0.048,
+        "momentum_60s": -0.056,
+        "momentum_120s": 0.103,
+        "momentum_accel": -0.056,
+        "volatility_pct": 0.32,
+        "volatility_state": "contracting",
+        "trend_bias": "weak_up",
+        "distance_from_sma20": -0.111,
+        "mean_reversion_pressure": "low",
+        "score": 0.1
+      },
+      "price": 126.02
+    },
+    "XRP": {
+      "direction": "NO_TRADE",
+      "confidence": 0,
+      "basis": {
+        "momentum_30s": 0.052,
+        "momentum_60s": 0.021,
+        "momentum_120s": 0.136,
+        "momentum_accel": -0.084,
+        "volatility_pct": 0.295,
+        "volatility_state": "contracting",
+        "trend_bias": "strong_up",
+        "distance_from_sma20": 0.18,
+        "mean_reversion_pressure": "low",
+        "score": 0.2
+      },
+      "price": 1.9164
+    }
+  }
+}

@@ -1,0 +1,17 @@
+/Users/clawd/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
+  warnings.warn(
+================================================================================
+🔄 MULTI-ASSET SIGNAL ENGINE - ALWAYS-ON MODE
+================================================================================
+Assets: BTC, ETH, SOL, XRP
+Output: /Users/clawd/clawd/polymarket-btc-agent/signals_all.json
+Log: /Users/clawd/clawd/polymarket-btc-agent/signals_all.jsonl
+Loop: 3 seconds
+================================================================================
+
+🚀 Multi-asset signal engine starting...
+
+[19:19:18] BTC: ⚪NO_T  0% $  89,519  ETH: 🟢UP   90% $   3,015  SOL: ⚪NO_T  0% $     126  XRP: ⚪NO_T  0% $       2  
+[19:19:25] BTC: ⚪NO_T  0% $  89,462  ETH: ⚪NO_T  0% $   3,013  SOL: ⚪NO_T  0% $     126  XRP: ⚪NO_T  0% $       2  
+[19:19:32] BTC: ⚪NO_T  0% $  89,422  ETH: ⚪NO_T  0% $   3,011  SOL: ⚪NO_T  0% $     126  XRP: ⚪NO_T  0% $       2  
+[19:19:40] BTC: ⚪NO_T  0% $  89,422  ETH: ⚪NO_T  0% $   3,012  SOL: ⚪NO_T  0% $     126  XRP: ⚪NO_T  0% $       2  
