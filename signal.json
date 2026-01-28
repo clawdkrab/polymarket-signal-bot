@@ -1,0 +1,18 @@
+{
+  "timestamp": "2026-01-28T17:42:30.413456+00:00",
+  "direction": "NO_TRADE",
+  "confidence": 0,
+  "price": 89654.99,
+  "basis": {
+    "momentum_30s": 0.068,
+    "momentum_60s": -0.081,
+    "momentum_120s": 0.115,
+    "momentum_accel": -0.047,
+    "volatility_pct": 0.251,
+    "volatility_state": "contracting",
+    "trend_bias": "weak_up",
+    "distance_from_sma20": -0.106,
+    "mean_reversion_pressure": "low",
+    "score": 0.1
+  }
+}

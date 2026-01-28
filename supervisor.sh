@@ -33,7 +33,7 @@ echo ""
 # Function to check if process is running
 is_running() {
     local script_name="$1"
-    pgrep -f "python.*$script_name" > /dev/null 2>&1
+    ps aux | grep -F "$script_name" | grep -v grep > /dev/null 2>&1
 }
 
 # Function to start signal engine
@@ -46,7 +46,7 @@ start_signal_engine() {
         sleep 2
         
         if is_running "$SIGNAL_ENGINE"; then
-            echo "✅ Signal engine started (PID: $(pgrep -f "python.*$SIGNAL_ENGINE"))"
+            echo "✅ Signal engine started (PID: $(ps aux | grep -F "$SIGNAL_ENGINE" | grep -v grep | awk '{print $2}' | head -1))"
         else
             echo "❌ Signal engine failed to start"
             return 1
@@ -59,6 +59,14 @@ start_trade_executor() {
     if is_running "$TRADE_EXECUTOR"; then
         echo "✅ Trade executor already running"
     else
+        # Check if Chrome is already running
+        if ps aux | grep -i "Google Chrome" | grep -v grep > /dev/null 2>&1; then
+            echo "⚠️  WARNING: Chrome is already running!"
+            echo "   Playwright needs exclusive access to the profile."
+            echo "   Close Chrome and try again, or press Enter to continue anyway..."
+            read -t 5 || true
+        fi
+        
         echo "🚀 Starting trade executor..."
         nohup python3 "$TRADE_EXECUTOR" \
             --position-size "$POSITION_SIZE" \
@@ -68,9 +76,10 @@ start_trade_executor() {
         sleep 2
         
         if is_running "$TRADE_EXECUTOR"; then
-            echo "✅ Trade executor started (PID: $(pgrep -f "python.*$TRADE_EXECUTOR"))"
+            echo "✅ Trade executor started (PID: $(ps aux | grep -F "$TRADE_EXECUTOR" | grep -v grep | awk '{print $2}' | head -1))"
         else
             echo "❌ Trade executor failed to start"
+            echo "   Check: tail -50 $TRADE_LOG"
             return 1
         fi
     fi
@@ -81,12 +90,12 @@ stop_all() {
     echo "🛑 Stopping all processes..."
     
     if is_running "$SIGNAL_ENGINE"; then
-        pkill -f "python.*$SIGNAL_ENGINE"
+        ps aux | grep -F "$SIGNAL_ENGINE" | grep -v grep | awk '{print $2}' | xargs kill 2>/dev/null
         echo "   ✅ Signal engine stopped"
     fi
     
     if is_running "$TRADE_EXECUTOR"; then
-        pkill -f "python.*$TRADE_EXECUTOR"
+        ps aux | grep -F "$TRADE_EXECUTOR" | grep -v grep | awk '{print $2}' | xargs kill 2>/dev/null
         echo "   ✅ Trade executor stopped"
     fi
     
@@ -99,14 +108,14 @@ show_status() {
     echo "=================================="
     
     if is_running "$SIGNAL_ENGINE"; then
-        local pid=$(pgrep -f "python.*$SIGNAL_ENGINE")
+        local pid=$(ps aux | grep -F "$SIGNAL_ENGINE" | grep -v grep | awk '{print $2}' | head -1)
         echo "Signal Engine:  ✅ RUNNING (PID: $pid)"
     else
         echo "Signal Engine:  ❌ STOPPED"
     fi
     
     if is_running "$TRADE_EXECUTOR"; then
-        local pid=$(pgrep -f "python.*$TRADE_EXECUTOR")
+        local pid=$(ps aux | grep -F "$TRADE_EXECUTOR" | grep -v grep | awk '{print $2}' | head -1)
         echo "Trade Executor: ✅ RUNNING (PID: $pid)"
     else
         echo "Trade Executor: ❌ STOPPED"

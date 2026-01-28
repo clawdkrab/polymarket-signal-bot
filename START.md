@@ -6,6 +6,21 @@
 ✅ Chrome browser with MetaMask extension  
 ✅ MetaMask connected to Polymarket  
 ✅ MetaMask has funds for trading  
+⚠️  **IMPORTANT:** Close all Chrome windows before starting (profile must not be in use)  
+
+## Pre-Launch Check
+
+Before starting, ensure Chrome is completely closed:
+
+```bash
+# Check if Chrome is running
+ps aux | grep -i chrome | grep -v grep
+
+# If Chrome is running, close all windows or kill it:
+pkill -x "Google Chrome"
+```
+
+**Why?** Playwright needs exclusive access to the Chrome profile.
 
 ## Launch (One Command)
 
@@ -131,6 +146,13 @@ tail -f trades.jsonl
 
 ### No signal.json file
 Wait 5 seconds after start. File is created on first signal generation.
+
+### Trade executor not starting / No output in logs
+Chrome is probably already running. Close it completely:
+```bash
+pkill -x "Google Chrome"
+./supervisor.sh restart
+```
 
 ### Trade executor can't find Chrome profile
 Check profile name:

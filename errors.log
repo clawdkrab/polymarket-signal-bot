@@ -1,0 +1,23 @@
+[2026-01-28T17:41:20.993401] Browser start failed: BrowserType.launch_persistent_context: Target page, context or browser has been closed
+Browser logs:
+
+<launching> /Applications/Google Chrome.app/Contents/MacOS/Google Chrome --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-extensions --disable-features=AcceptCHFrame,AvoidUnnecessaryBeforeUnloadCheckSync,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,Translate,AutoDeElevate,RenderDocument,OptimizationHints --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --no-sandbox --profile-directory=Default --disable-blink-features=AutomationControlled --no-sandbox --disable-web-security --user-data-dir=/Users/clawd/Library/Application Support/Google/Chrome --remote-debugging-pipe about:blank
+<launched> pid=10769
+[pid=10769][err] [0128/174120.924245:ERROR:chrome/app/chrome_main_delegate.cc:1062] Web security may only be disabled if '--user-data-dir' is also specified with a non-default value.
+[pid=10769][out] Opening in existing browser session.
+Call log:
+  - <launching> /Applications/Google Chrome.app/Contents/MacOS/Google Chrome --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-extensions --disable-features=AcceptCHFrame,AvoidUnnecessaryBeforeUnloadCheckSync,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,Translate,AutoDeElevate,RenderDocument,OptimizationHints --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --no-sandbox --profile-directory=Default --disable-blink-features=AutomationControlled --no-sandbox --disable-web-security --user-data-dir=/Users/clawd/Library/Application Support/Google/Chrome --remote-debugging-pipe about:blank
+  - <launched> pid=10769
+  - [pid=10769][err] [0128/174120.924245:ERROR:chrome/app/chrome_main_delegate.cc:1062] Web security may only be disabled if '--user-data-dir' is also specified with a non-default value.
+  - [pid=10769][out] Opening in existing browser session.
+  - [pid=10769] <gracefully close start>
+  - [pid=10769] <kill>
+  - [pid=10769] <will force kill>
+  - [pid=10769] exception while trying to kill process: Error: kill EPERM
+  - [pid=10769] <process did exit: exitCode=0, signal=null>
+  - [pid=10769] starting temporary directories cleanup
+  - [pid=10769] finished temporary directories cleanup
+  - [pid=10769] <gracefully close end>
+
+[2026-01-28T17:41:51.022319] Browser start failed: It looks like you are using Playwright Sync API inside the asyncio loop.
+Please use the Async API instead.
