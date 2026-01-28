@@ -1,0 +1,31 @@
+{
+  "mode": "AGGRESSIVE",
+  "capital": 300.0,
+  "risk_settings": {
+    "max_position_pct": 0.20,
+    "base_position_pct": 0.08,
+    "min_confidence": 65,
+    "max_daily_loss_pct": 0.30,
+    "max_drawdown_pct": 0.35
+  },
+  "trading_rules": {
+    "min_trade_size": 15.0,
+    "max_trades_per_day": 25,
+    "cooldown_minutes": 2,
+    "preferred_markets": ["BTC", "bitcoin"],
+    "backup_markets": ["ETH", "ethereum", "crypto"],
+    "avoid_keywords": ["long-term", "year", "2027", "2028"]
+  },
+  "safety": {
+    "require_confirmation": false,
+    "stop_loss_enabled": true,
+    "capital_preservation_threshold": 0.40
+  },
+  "aggression": {
+    "compound_wins": true,
+    "scale_on_streak": true,
+    "max_streak_multiplier": 1.5,
+    "reduce_cooldown_on_streak": true,
+    "min_cooldown_seconds": 60
+  }
+}

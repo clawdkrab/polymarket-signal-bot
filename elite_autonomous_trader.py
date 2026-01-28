@@ -70,7 +70,11 @@ class EliteAutonomousTrader:
         self.win_streak = 0
         self.loss_streak = 0
         self.last_trade_time = None
-        self.cooldown_minutes = 5
+        
+        # Aggressive mode settings
+        self.cooldown_minutes = self.config.get('trading_rules', {}).get('cooldown_minutes', 5)
+        self.is_aggressive = self.config.get('mode', 'LIVE') == 'AGGRESSIVE'
+        self.aggression = self.config.get('aggression', {})
         
         # Browser timing
         self.last_full_reload = datetime.now()
@@ -268,6 +272,14 @@ class EliteAutonomousTrader:
                 self.loss_streak
             )
             
+            # Aggressive mode: Scale up on win streaks
+            if self.is_aggressive and self.aggression.get('scale_on_streak', False):
+                if self.win_streak >= 3:
+                    max_multiplier = self.aggression.get('max_streak_multiplier', 1.5)
+                    streak_multiplier = min(1 + (self.win_streak * 0.1), max_multiplier)
+                    position_size *= streak_multiplier
+                    print(f"   🔥 AGGRESSIVE: Win streak bonus x{streak_multiplier:.2f}")
+            
             # Update risk manager's peak capital
             self.risk_manager.update_peak(self.capital)
             
@@ -335,9 +347,18 @@ class EliteAutonomousTrader:
     def check_cooldown(self) -> tuple[bool, str]:
         """Check if enough time has passed since last trade."""
         if self.last_trade_time:
+            # Aggressive mode: Reduce cooldown on win streaks
+            cooldown = self.cooldown_minutes
+            if self.is_aggressive and self.aggression.get('reduce_cooldown_on_streak', False):
+                if self.win_streak >= 2:
+                    min_cooldown = self.aggression.get('min_cooldown_seconds', 60) / 60
+                    cooldown = max(min_cooldown, cooldown * 0.5)
+                    if cooldown < self.cooldown_minutes:
+                        print(f"   ⚡ AGGRESSIVE: Cooldown reduced to {cooldown:.1f}m (win streak: {self.win_streak})")
+            
             elapsed = (datetime.now() - self.last_trade_time).total_seconds() / 60
-            if elapsed < self.cooldown_minutes:
-                remaining = self.cooldown_minutes - elapsed
+            if elapsed < cooldown:
+                remaining = cooldown - elapsed
                 return False, f"Cooldown: {remaining:.1f}m remaining"
         return True, "Ready to trade"
     
