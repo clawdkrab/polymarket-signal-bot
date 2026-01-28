@@ -163,7 +163,7 @@ class MultiAssetSignalEngine:
         # === DECISION ===
         direction = "NO_TRADE"
         confidence = 0
-        threshold = 0.25
+        threshold = 0.15  # Lowered from 0.25 to generate more signals
         
         if score > threshold:
             direction = "UP"

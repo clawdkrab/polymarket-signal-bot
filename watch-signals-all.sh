@@ -36,11 +36,17 @@ try:
     # Clear previous display
     print('\033[H\033[J', end='')  # Clear screen
     
+    from datetime import datetime
+    
+    # Activity indicator (rotates)
+    indicators = ['⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏']
+    indicator = indicators[int(datetime.now().timestamp()) % len(indicators)]
+    
     print("╔════════════════════════════════════════════════════════════════════════╗")
     print("║          📊 POLYMARKET 15M SIGNALS - ALL 4 ASSETS                      ║")
     print("╚════════════════════════════════════════════════════════════════════════╝")
     print()
-    print(f"Updated: {time_str} UTC                            Press Ctrl+C to exit")
+    print(f"{indicator} Live: {time_str} UTC                         Press Ctrl+C to exit")
     print()
     print("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
     
@@ -70,12 +76,12 @@ try:
         # Asset header
         print(f"\n{emoji} {color}{asset_name:4s} {direction:8s}{reset} | Conf: {confidence:2d}% | ${price:>10,.2f}")
         
-        # Technical details if confidence > 0
-        if confidence > 0:
-            mom_30s = basis.get('momentum_30s', 0)
-            mom_120s = basis.get('momentum_120s', 0)
-            trend = basis.get('trend_bias', 'unknown')
-            print(f"   30s: {mom_30s:+.3f}% | 2m: {mom_120s:+.3f}% | Trend: {trend}")
+        # Always show technical details (even if NO_TRADE)
+        mom_30s = basis.get('momentum_30s', 0)
+        mom_120s = basis.get('momentum_120s', 0)
+        trend = basis.get('trend_bias', 'unknown')
+        score = basis.get('score', 0)
+        print(f"   30s: {mom_30s:+.3f}% | 2m: {mom_120s:+.3f}% | Score: {score:+.2f} | Trend: {trend}")
         
         # Recommendation
         if confidence >= 70:
