@@ -24,8 +24,16 @@ pkill -x "Google Chrome"
 
 ## Launch (One Command)
 
+**Easiest way:**
 ```bash
 cd /Users/clawd/clawd/polymarket-btc-agent
+./start-bot.sh
+```
+
+**Or manually with supervisor:**
+```bash
+cd /Users/clawd/clawd/polymarket-btc-agent
+export CHROME_PROFILE="Profile 1"
 ./supervisor.sh start
 ```
 
